@@ -6,7 +6,11 @@ class TestISBN_Machine < Minitest::Test
 		assert_equal(1,1)
 	end
 
-	def test_length_equals_10_or_13
+	def test_length_equals_six_fails
 		assert_equal(false,check_isbn("123456"))
+	end
+
+	def test_length_equals_ten_passes
+		assert_equal(true,check_isbn("1234567891"))
 	end
 end
