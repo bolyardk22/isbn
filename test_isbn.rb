@@ -39,6 +39,10 @@ class TestISBN_Machine < Minitest::Test
 		assert_equal(true,check_if_last_num_passes("9780306406157"))
 	end
 
+	def test_checks_last_digit_for_thirteen_true_take_two
+		assert_equal(true,check_if_last_num_passes("9780471486480"))
+	end
+
 	def test_checks_last_digit_for_thirteen_false
 		assert_equal(false,check_if_last_num_passes("4780470059029"))
 	end

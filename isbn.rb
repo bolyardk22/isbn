@@ -69,18 +69,21 @@ def check_if_last_num_passes(cleanedISBN)
 				mult = var.to_f * 3
 				math_array << mult
 			else
-				mult = var.to_f
+				mult = var.to_i
 				math_array << mult
 			end
 		end
 
 		math_array_sum = math_array.inject(0, :+)
 
+
 		math_array_mod_one = 10 - (math_array_sum % 10)
+
 
 		math_array_mod = math_array_mod_one % 10
 
-		if math_array_mod == last_positionISBN
+
+		if math_array_mod == last_positionISBN.to_i
 			true
 		else
 			false
