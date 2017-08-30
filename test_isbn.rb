@@ -47,4 +47,32 @@ class TestISBN_Machine < Minitest::Test
 		assert_equal(false,check_if_last_num_passes("4780470059029"))
 	end
 
+	def test_checks_big_function_length_fails
+		assert_equal(false,one_big_isbn_function("12345"))
+	end
+
+	def test_checks_big_function_ten_true
+		assert_equal(true,one_big_isbn_function("123456789X"))
+	end
+
+	def test_checks_big_function_ten_false
+		assert_equal(false,one_big_isbn_function("1234567894"))
+	end
+
+	def test_checks_big_function_thirteen_true
+		assert_equal(true,one_big_isbn_function("9780471486480"))
+	end
+
+	def test_checks_big_function_thirteen_false
+		assert_equal(false,one_big_isbn_function("4780470059029"))
+	end
+
+	def test_checks_big_function_removes_spaces
+		assert_equal(true,one_big_isbn_function("12 3456 789 X"))
+	end
+
+	def test_checks_big_function_removes_dashes
+		assert_equal(true,one_big_isbn_function("12-3456-789-X"))
+	end
+
 end

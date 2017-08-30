@@ -90,3 +90,85 @@ def check_if_last_num_passes(cleanedISBN)
 		end
 	end
 end
+
+def one_big_isbn_function(inputISBN)
+
+	inputISBN = inputISBN.delete(' ')
+	inputISBN = inputISBN.delete('-')
+
+	math_array = []
+
+	if inputISBN.length == 10
+
+		arrayISBN = inputISBN.split('')
+
+		last_positionISBN = arrayISBN.pop
+
+		arrayISBN.each.with_index do |var, index|
+
+			mult = var.to_f * (index.to_f + 1)
+
+			math_array << mult
+		end
+
+		math_array_sum = math_array.inject(0, :+)
+
+		math_array_mod = math_array_sum % 11
+
+		if math_array_mod <= 9
+			math_array_mod
+
+		elsif math_array_mod ==10
+			math_array_mod = "X"
+
+		else
+			returnvar = false
+		end
+
+		if math_array_mod == last_positionISBN
+			returnvar = true
+
+		else
+			returnvar = false
+		end
+
+	elsif inputISBN.length == 13
+
+		arrayISBN = inputISBN.split('')
+
+		last_positionISBN = arrayISBN.pop
+
+		arrayISBN.each.with_index do |var, index|
+
+			if (index + 1) % 2 == 0
+				mult = var.to_f * 3
+				math_array << mult
+
+			else
+				mult = var.to_i
+				math_array << mult
+			end
+		end
+
+		math_array_sum = math_array.inject(0, :+)
+
+
+		math_array_mod_one = 10 - (math_array_sum % 10)
+
+
+		math_array_mod = math_array_mod_one % 10
+
+
+		if math_array_mod == last_positionISBN.to_i
+			returnvar = true
+
+		else
+			returnvar = false
+		end
+
+	else
+		returnvar = false
+	end
+
+	returnvar
+end
