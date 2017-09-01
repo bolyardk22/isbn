@@ -13,6 +13,16 @@ def checkISBNlength (sampleISBN)
 	end
 end
 
+def numbers_only(number)
+	if number !~ /\D/    
+		true
+	elsif number.chop !~ /\D/
+		true
+	else 
+		false
+	end 
+end
+
 
 def cleanISBN (sampleISBN2)
 
@@ -98,77 +108,165 @@ def one_big_isbn_function(inputISBN)
 
 	math_array = []
 
-	if inputISBN.length == 10
+	if inputISBN !~ /\D/    
 
-		arrayISBN = inputISBN.split('')
+		if inputISBN.length == 10
 
-		last_positionISBN = arrayISBN.pop
+			arrayISBN = inputISBN.split('')
 
-		arrayISBN.each.with_index do |var, index|
+			last_positionISBN = arrayISBN.pop
 
-			mult = var.to_f * (index.to_f + 1)
+			arrayISBN.each.with_index do |var, index|
 
-			math_array << mult
-		end
+				mult = var.to_f * (index.to_f + 1)
 
-		math_array_sum = math_array.inject(0, :+)
-
-		math_array_mod = math_array_sum % 11
-
-		if math_array_mod <= 9
-			math_array_mod
-
-		elsif math_array_mod ==10
-			math_array_mod = "X"
-
-		else
-			returnvar = false
-		end
-
-		if math_array_mod == last_positionISBN
-			returnvar = true
-
-		else
-			returnvar = false
-		end
-
-	elsif inputISBN.length == 13
-
-		arrayISBN = inputISBN.split('')
-
-		last_positionISBN = arrayISBN.pop
-
-		arrayISBN.each.with_index do |var, index|
-
-			if (index + 1) % 2 == 0
-				mult = var.to_f * 3
-				math_array << mult
-
-			else
-				mult = var.to_i
 				math_array << mult
 			end
-		end
 
-		math_array_sum = math_array.inject(0, :+)
+			math_array_sum = math_array.inject(0, :+)
+
+			math_array_mod = math_array_sum % 11
+
+			if math_array_mod <= 9
+				math_array_mod
+
+			elsif math_array_mod ==10
+				math_array_mod = "X"
+
+			else
+				returnvar = "false"
+			end
+
+			if math_array_mod == last_positionISBN
+				returnvar = "true"
+
+			else
+				returnvar = "false"
+			end
+
+		elsif inputISBN.length == 13
+
+			arrayISBN = inputISBN.split('')
+
+			last_positionISBN = arrayISBN.pop
+
+			arrayISBN.each.with_index do |var, index|
+
+				if (index + 1) % 2 == 0
+					mult = var.to_f * 3
+					math_array << mult
+
+				else
+					mult = var.to_i
+					math_array << mult
+				end
+			end
+
+			math_array_sum = math_array.inject(0, :+)
 
 
-		math_array_mod_one = 10 - (math_array_sum % 10)
+			math_array_mod_one = 10 - (math_array_sum % 10)
 
 
-		math_array_mod = math_array_mod_one % 10
+			math_array_mod = math_array_mod_one % 10
 
 
-		if math_array_mod == last_positionISBN.to_i
-			returnvar = true
+			if math_array_mod == last_positionISBN.to_i
+				returnvar = "true"
+
+			else
+				returnvar = "false"
+			end
 
 		else
-			returnvar = false
+			returnvar = "false"
 		end
 
-	else
-		returnvar = false
+	elsif inputISBN.chop !~ /\D/
+
+			if inputISBN.length == 10
+
+				arrayISBN = inputISBN.split('')
+
+				last_positionISBN = arrayISBN.pop
+
+				arrayISBN.each.with_index do |var, index|
+
+				mult = var.to_f * (index.to_f + 1)
+
+				math_array << mult
+			end
+
+			math_array_sum = math_array.inject(0, :+)
+
+			math_array_mod = math_array_sum % 11
+
+			if math_array_mod <= 9
+				math_array_mod
+
+			elsif math_array_mod ==10
+				math_array_mod = "X"
+
+			else
+				returnvar = "false"
+			end
+
+			if math_array_mod == last_positionISBN
+				returnvar = "true"
+
+			else
+				returnvar = "false"
+			end
+
+		elsif inputISBN.length == 13
+
+			arrayISBN = inputISBN.split('')
+
+			last_positionISBN = arrayISBN.pop
+
+			arrayISBN.each.with_index do |var, index|
+
+				if (index + 1) % 2 == 0
+					mult = var.to_f * 3
+					math_array << mult
+
+				else
+					mult = var.to_i
+					math_array << mult
+				end
+			end
+
+			math_array_sum = math_array.inject(0, :+)
+
+
+			math_array_mod_one = 10 - (math_array_sum % 10)
+
+
+			math_array_mod = math_array_mod_one % 10
+
+
+			if math_array_mod == last_positionISBN.to_i
+				returnvar = "true"
+
+			else
+				returnvar = "false"
+			end
+
+		else
+			returnvar = "false"
+		end
 	end
 
 	returnvar
+end
+
+def isbn_results(bigfunctionresults)
+	if bigfunctionresults == "true"
+		the_answer = "Congratulations, <%=isbn_input%> is a valid ISBN!"
+
+	else
+		the_answer = "Sorry, <%=isbn_input%> is not a valid ISBN."
+	end
+
+	the_answer
 end
