@@ -1,3 +1,24 @@
+require 'csv'
+
+def check_through_csv_file
+	sample_array = CSV.read('input_isbn_file.csv')
+
+	sample_array = sample_array.shift
+
+	finished_array = []
+
+	sample_array.each do |value|
+		if one_big_isbn_function(value[1]) == "true"
+			value.push("valid")
+		else
+			value.push("invalid")
+		end
+		finished_array.push(value)
+	end
+
+end
+
+
 def checkISBNlength (sampleISBN)
 
 	sampleISBN = sampleISBN.delete(' ')
@@ -127,16 +148,6 @@ def one_big_isbn_function(inputISBN)
 
 			math_array_mod = math_array_sum % 11
 
-			if math_array_mod <= 9
-				math_array_mod
-
-			elsif math_array_mod ==10
-				math_array_mod = "X"
-
-			else
-				returnvar = "false"
-			end
-
 			if math_array_mod == last_positionISBN
 				returnvar = "true"
 
@@ -205,13 +216,13 @@ def one_big_isbn_function(inputISBN)
 				math_array_mod
 
 			elsif math_array_mod ==10
-				math_array_mod = "X"
+				math_array_mod = "x"
 
 			else
 				returnvar = "false"
 			end
 
-			if math_array_mod == last_positionISBN
+			if math_array_mod == last_positionISBN.downcase
 				returnvar = "true"
 
 			else
@@ -255,6 +266,9 @@ def one_big_isbn_function(inputISBN)
 		else
 			returnvar = "false"
 		end
+
+	else
+		returnvar = "false"
 	end
 
 	returnvar
@@ -262,11 +276,43 @@ end
 
 def isbn_results(bigfunctionresults)
 	if bigfunctionresults == "true"
-		the_answer = "Congratulations, <%=isbn_input%> is a valid ISBN!"
+		the_answer = 'Congratulations, '
 
 	else
-		the_answer = "Sorry, <%=isbn_input%> is not a valid ISBN."
+		the_answer = 'Sorry, '
 	end
 
 	the_answer
 end
+
+def isbn_results_pt_two(bigfuncresults)
+	if bigfuncresults == "true"
+		answered = ' is a valid ISBN number!'
+
+	else
+		answered = ' is not a valid ISBN number.'
+	end
+	answered
+end
+
+def check_through_csv_file()
+	sample_array = CSV.read('input_isbn_file.csv')
+	sample_array.shift
+
+	finished_array = []
+
+	sample_array.each do |value|
+		if one_big_isbn_function(value[1]) == "true"
+			value.push("valid")
+		else
+			value.push("invalid")
+		end
+		finished_array.push(value)
+	end
+
+	CSV.open("output_isbn_file.csv", "w") do |csv|
+		csv << finished_array
+	end
+end
+
+check_through_csv_file()

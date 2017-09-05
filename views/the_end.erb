@@ -27,9 +27,10 @@
 
 <body>
 	<form method = 'post' action = '/the_results_page'>
-	<input type = 'hidden' name = 'result_statement'>
-	<input type = 'hidden' name = 'isbn_input' value = '<%=isbn_input%>'>
-	<input type = 'hidden' name = 'isbn_func' value = '<%=isbn_func%>'>
-	<p><%=result_statement%></p>
+		<input type = 'hidden' name = 'result_statement'>
+		<input type = 'hidden' name = 'isbn_input' value = '<%=isbn_input%>'>
+		<input type = 'hidden' name = 'isbn_func' value = '<%=isbn_func%>'>
+		<p><%=result_statement%><%=isbn_input%><%=second_statement%></p>
 	</form>
+	<a href="/">Try Another</a>
 </body>

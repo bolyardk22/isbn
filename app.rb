@@ -16,7 +16,8 @@ get '/true_or_false' do
 	isbn_input = params[:isbn_input]
 	isbn_func = params[:isbn_func]
 	result_statement = isbn_results(isbn_func)
-	erb :the_end, locals: {isbn_input: isbn_input, isbn_func: isbn_func, result_statement: result_statement}
+	second_statement = isbn_results_pt_two(isbn_func)
+	erb :the_end, locals: {isbn_input: isbn_input, isbn_func: isbn_func, result_statement: result_statement, second_statement: second_statement}
 end
 
 post '/the_results_page' do
