@@ -1,5 +1,11 @@
 require 'sinatra'
 require_relative 'isbn.rb'
+load "./local_env.rb"
+
+:access_key_id => ENV['S3_KEY']
+:secret_access_key => ENV['S3_SECRET'] 
+bucket => ENV['S3_BUCKET']
+file => ENV['S3File']
 
 get '/' do
 	erb :index
