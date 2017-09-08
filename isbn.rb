@@ -1,24 +1,5 @@
 require 'csv'
 
-def check_through_csv_file
-	sample_array = CSV.read('input_isbn_file.csv')
-
-	sample_array = sample_array.shift
-
-	finished_array = []
-
-	sample_array.each do |value|
-		if one_big_isbn_function(value[1]) == "true"
-			value.push("valid")
-		else
-			value.push("invalid")
-		end
-		finished_array.push(value)
-	end
-
-end
-
-
 def checkISBNlength (sampleISBN)
 
 	sampleISBN = sampleISBN.delete(' ')
@@ -126,6 +107,7 @@ def one_big_isbn_function(inputISBN)
 
 	inputISBN = inputISBN.delete(' ')
 	inputISBN = inputISBN.delete('-')
+	inputISBN = inputISBN.delete('%')
 
 	math_array = []
 
@@ -298,21 +280,29 @@ end
 def check_through_csv_file()
 	sample_array = CSV.read('input_isbn_file.csv')
 	sample_array.shift
-
-	finished_array = []
+	something = []
 
 	sample_array.each do |value|
 		if one_big_isbn_function(value[1]) == "true"
-			value.push("valid")
-		else
-			value.push("invalid")
-		end
-		finished_array.push(value)
-	end
+			value.push("valid\n")
+			something.push("#{value[0]}\t#{value[1]}\t#{value[2]}")
 
-	CSV.open("output_isbn_file.csv", "w") do |csv|
-		csv << finished_array
+		else
+			value.push("invalid\n")
+			something.push("#{value[0]}\t#{value[1]}\t#{value[2]}")
+
+		end
+		CSV.open("output_isbn_file.csv", "w", {:col_sep => "\t", :row_sep => "\n"}) do |csv|
+		csv << something
+
 	end
+end
+
+	puts something
+
+	# CSV.open("output_isbn_file.csv", "w", {:col_sep => "\t", :row_sep => "\n"}) do |csv|
+	# 	csv << something
+	# end
 end
 
 check_through_csv_file()
