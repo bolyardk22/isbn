@@ -279,19 +279,27 @@ end
 
 def check_through_csv_file()
 
-	write_file = File.open("output_isbn_file.csv", "w")
+ 	write_file = File.open("output_isbn_file.csv", "w")
+	sample_array = CSV.read('input_isbn_file.csv')
+	
+	sample_array.shift
 
-	CSV.foreach('input_isbn_file.csv') do |row|
-		row.shift
+	sample_array.each do |value|
+		
+		something = []
 
-		if one_big_isbn_function(row[1]).to_s == "true"
-			row << ("valid")
+		if one_big_isbn_function(value[1]) == "true"
+			value.push("valid\n")
+			something.push("#{value[0]},#{value[1]},#{value[2]}")
 
 		else
-			row << ("invalid")
+			value.push("invalid\n")
+			something.push("#{value[0]},#{value[1]},#{value[2]}")
+
 		end
 
-		write_file.puts row[0] + "," + row[1] + "," + row[2]
+		write_file.puts something
+
 	end
 end
 
