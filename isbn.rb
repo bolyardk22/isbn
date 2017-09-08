@@ -278,31 +278,21 @@ def isbn_results_pt_two(bigfuncresults)
 end
 
 def check_through_csv_file()
-	sample_array = CSV.read('input_isbn_file.csv')
-	sample_array.shift
-	something = []
 
-	sample_array.each do |value|
-		if one_big_isbn_function(value[1]) == "true"
-			value.push("valid\n")
-			something.push("#{value[0]}\t#{value[1]}\t#{value[2]}")
+	write_file = File.open("output_isbn_file.csv", "w")
+
+	CSV.foreach('input_isbn_file.csv') do |row|
+		row.shift
+
+		if one_big_isbn_function(row[1]).to_s == "true"
+			row << ("valid")
 
 		else
-			value.push("invalid\n")
-			something.push("#{value[0]}\t#{value[1]}\t#{value[2]}")
-
+			row << ("invalid")
 		end
-		CSV.open("output_isbn_file.csv", "w", {:col_sep => "\t", :row_sep => "\n"}) do |csv|
-		csv << something
 
+		write_file.puts row[0] + "," + row[1] + "," + row[2]
 	end
-end
-
-	puts something
-
-	# CSV.open("output_isbn_file.csv", "w", {:col_sep => "\t", :row_sep => "\n"}) do |csv|
-	# 	csv << something
-	# end
 end
 
 check_through_csv_file()
