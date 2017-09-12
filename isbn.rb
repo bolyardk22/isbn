@@ -1,4 +1,30 @@
 require 'csv'
+require 'aws-sdk'
+require 'rubygems'
+load "./local_env.rb"
+Aws.use_bundled_cert!
+
+def connect_to_s3()
+	Aws::S3::Client.new(
+	access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+	secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+	region: ENV['AWS_REGION'],
+	)
+
+	file = "output_isbn_file.csv"
+	bucket = 'isbnbucket'
+	s3 = Aws::S3::Resource.new(region: 'us-east-2')
+	obj = s3.bucket(bucket).object(file)
+
+	# string data
+	obj.put(body: '"some code here to show something being added to the bucket."+ "\n"')
+	# push entire file 
+	File.open('output_isbn_file.csv', 'rb') do |file|
+		obj.put(body: file)
+	end
+end
+
+connect_to_s3
 
 def checkISBNlength (sampleISBN)
 
@@ -303,4 +329,4 @@ def check_through_csv_file()
 	end
 end
 
-check_through_csv_file()
+#check_through_csv_file()
