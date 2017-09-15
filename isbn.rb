@@ -1,7 +1,7 @@
 require 'csv'
 require 'aws-sdk'
 require 'rubygems'
-load "./local_env.rb"
+load './local_env.rb' if File.exist?('./local_env.rb')
 Aws.use_bundled_cert!
 
 def connect_to_s3()
