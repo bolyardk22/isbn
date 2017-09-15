@@ -1,5 +1,5 @@
 require 'csv'
-require 'aws-sdk-s3'
+require 'aws-sdk'
 require 'rubygems'
 load "./local_env.rb"
 Aws.use_bundled_cert!
