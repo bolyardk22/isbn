@@ -328,7 +328,7 @@ def check_through_csv_file()
 end
 
 def make_it_say_valid(trueorfalse)
-	if trueorfalse = "true"
+	if trueorfalse == "true"
 		ends_up = "valid"
 	else
 		ends_up = "invalid"
