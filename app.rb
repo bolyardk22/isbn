@@ -1,6 +1,7 @@
 require 'sinatra'
 require_relative 'isbn.rb'
-load "./local_env.rb"
+require 'aws-sdk'
+load './local_env.rb' if File.exist?('./local_env.rb')
 
 get '/' do
 	erb :index
