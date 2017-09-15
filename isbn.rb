@@ -24,8 +24,6 @@ def connect_to_s3()
 	end
 end
 
-connect_to_s3
-
 def checkISBNlength (sampleISBN)
 
 	sampleISBN = sampleISBN.delete(' ')
@@ -308,7 +306,7 @@ def check_through_csv_file()
  	write_file = File.open("output_isbn_file.csv", "w")
 	sample_array = CSV.read('input_isbn_file.csv')
 	
-	sample_array.shift
+	header = sample_array.shift
 
 	sample_array.each do |value|
 		
@@ -329,4 +327,36 @@ def check_through_csv_file()
 	end
 end
 
-#check_through_csv_file()
+def make_it_say_valid(trueorfalse)
+	if trueorfalse = "true"
+		ends_up = "valid"
+	else
+		ends_up = "invalid"
+	end
+end
+
+def push_to_bucket(user_given_isbn, result_message)
+    Aws::S3::Client.new(
+    access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+    secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+    region: ENV['AWS_REGION']
+    )
+    file = 'output_isbn_file.csv'
+
+    write_file = File.open(file, "a")
+    write_file << user_given_isbn + ", " + result_message + "\n"
+    write_file.close
+   
+    bucket = 'isbnbucket'
+
+    s3 = Aws::S3::Resource.new(region: 'us-east-2')
+
+    obj = s3.bucket(bucket).object(file)
+    
+    File.open(file, 'rb') do |file|
+        obj.put(body: file)
+    end
+end
+
+# check_through_csv_file
+# connect_to_s3

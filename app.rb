@@ -2,11 +2,6 @@ require 'sinatra'
 require_relative 'isbn.rb'
 load "./local_env.rb"
 
-:access_key_id => ENV['S3_KEY']
-:secret_access_key => ENV['S3_SECRET'] 
-bucket => ENV['S3_BUCKET']
-file => ENV['S3File']
-
 get '/' do
 	erb :index
 end
@@ -23,6 +18,7 @@ get '/true_or_false' do
 	isbn_func = params[:isbn_func]
 	result_statement = isbn_results(isbn_func)
 	second_statement = isbn_results_pt_two(isbn_func)
+	push_to_bucket(isbn_input, make_it_say_valid(isbn_func))
 	erb :the_end, locals: {isbn_input: isbn_input, isbn_func: isbn_func, result_statement: result_statement, second_statement: second_statement}
 end
 
