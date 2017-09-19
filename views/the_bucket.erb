@@ -26,24 +26,19 @@
 </div>
 
 <body>
-	<div id="question">
-		<!-- How many ISBN numbers will you be checking?
-		<form method = "post" action = "results" id = "text_box">
-			<input type ="number" min = 1 max = 99 autofocus = "autofocus" id ="nameList" oninput = "isbn_enter_function()" >
-			<p id = "demo"></p>
-			<input type = "submit">
-		</form> -->
-		<form method = 'post' action = '/results'>
-		<p>Please enter an ISBN number.</p>
-		<input type = 'text' name = 'isbn_input'>
-		<input type = 'hidden' name = 'isbn_func'>
-		<input type = 'submit'>
-	</form>
-	</div>
+	<% the_bucket_var = the_bucket_var.gsub("[", "").gsub(" ", "").gsub("]","") %>
+	<% the_bucket_var = the_bucket_var.delete(' ')  %>
+	<% the_bucket_var = the_bucket_var.split(",") %>
+	
+	<%  the_bucket_var.each_with_index do |single, posi| %>
+		<% if posi % 3 == 0 %>
+			<br>
+		<% else %>
+		<% end %>
+	<%= "#{single.gsub('"','')}" %>
+	<% end %>
 	<br>
-	<a href="/bucket">See all</a>
+
+	<a href="/">Try Another</a>
+
 </body>
-
-<!-- <script src = "js/isbnenterfunctionc.js"></script> -->
-
-</html>

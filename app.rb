@@ -27,4 +27,11 @@ post '/the_results_page' do
 	isbn_input = params[:isbn_input]
 	isbn_func = params[:isbn_func]
 	result_statement = params[:result_statement]
+	redirect '/bucket'
+end
+
+get '/bucket' do
+	the_bucket_var = params[:the_bucket_var]
+	the_bucket_var = get_file.to_s
+	erb :the_bucket, locals: {the_bucket_var: the_bucket_var}
 end

@@ -377,7 +377,7 @@ def get_file()
     list
 end
 
-p get_file
+#p get_file
 
 # check_through_csv_file
 # connect_to_s3
